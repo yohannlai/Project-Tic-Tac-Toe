@@ -3,11 +3,11 @@
 
 Player create_player(){
     Player player;
-    std::cout << "Enter player name: ";
+    std::cout << "Entrer le nom du joueur: ";
     std::cin >> player.name;
 
     do{
-        std::cout << "Choose a symbol (X or O): ";
+        std::cout << "Choisissez un symbole (X ou O): ";
         std::cin >> player.symbol;
     } while (player.symbol != 'X' && player.symbol != 'O');
 
