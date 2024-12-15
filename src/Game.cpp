@@ -1,4 +1,6 @@
 #include "../include/Game.hpp"
+#include <cstdlib>
+#include <ctime>
 
 void draw_game_board(std::array<char, 9> game_board)
 {
@@ -67,7 +69,7 @@ void two_players()
 
         int move;
         do{
-            std::cout << current_player.name << " (" << current_player.symbol << "), choisissez une case (1-9) : ";
+            std::cout << current_player.name << " (" << current_player.symbol << "), choisissez une case (1-9): ";
             std::cin >> move;
 
             if(move < 1 || move > 9 || std::cin.fail())
@@ -117,11 +119,99 @@ void two_players()
 void player_vs_AI()
 {
     std::cout << "Vous avez choisi le mode \"Un joueur contre l'IA\": \n";
+
+    std::array<char, 9> game_board {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
     Player player = create_player();
+    Player AI;
+    AI.name = "IA";
+
+    if(player.symbol == 'X')
+    {
+        AI.symbol = 'O';
+    }
+    else
+    {
+        AI.symbol = 'X';
+    }
+
+    bool game_over = false;
+    int turn_count {0};
+    Player current_player = player;
+
+    while(!game_over && turn_count < 9)
+    {
+        draw_game_board(game_board);
+        int move;
+
+        if(current_player.name == "IA")
+        {
+            do {
+                move = std::rand() % 9;
+            } while (game_board[move] == 'X' || game_board[move] == 'O');
+
+            std::cout << "L'IA joue sur la case " << (move + 1) << "\n";
+
+            game_board[move] = AI.symbol;
+            turn_count++;
+        }
+        else
+        {
+            bool valid_move = false;
+            do {
+                std::cout << current_player.name << " (" << current_player.symbol << "), choisissez une case (1-9): ";
+                std::cin >> move;
+
+                if(move < 1 || move > 9 || std::cin.fail())
+                {
+                    std::cin.clear();
+                    std::cin.ignore(255, '\n');
+                    std::cout << "Entrée invalide. On a dit entre 1 et 9 ! \n";
+                }
+                else if(game_board[move - 1] == 'X' || game_board[move - 1] == 'O')
+                {
+                    std::cout << "Cette case est déjà occupée. Veuillez réessayer. \n";
+                }
+                else
+                {
+                    valid_move = true;
+                }
+            } while (!valid_move);
+
+            game_board[move - 1] = current_player.symbol;
+            turn_count++;
+        }
+
+        if(check_win(game_board, current_player.symbol))
+        {
+            draw_game_board(game_board);
+            std::cout << current_player.name << " a gagné ! \n";
+            game_over = true;
+        }
+        else
+        {
+            if(current_player.symbol == player.symbol)
+            {
+                current_player = AI;
+            }
+            else
+            {
+                current_player = player;
+            }
+        }
+    }
+
+    if(!game_over)
+    {
+        draw_game_board(game_board);
+        std::cout << "Match nul ! \n";
+    }
 }
 
 void boot()
 {
+    std::srand(std::time(nullptr));
+
     int choice;
     do{
         std::cout << "Bienvenue dans le jeu du TicTacToe \n" << "Veuillez choisir un mode de jeu : \n" << "1. Deux joueurs \n" << "2. Un joueur contre l'IA \n";
