@@ -235,4 +235,34 @@ void boot()
             player_vs_AI();
             break;
     }
+
+    play_again();
+}
+
+void play_again()
+{
+    std::cout << "Désirez-vous rejouer une partie ? \n";
+
+    int replay;
+    do{
+        std::cout << "1. Oui " << "2. Non \n";
+        std::cin >> replay;
+
+        if(replay != 1 && replay != 2 || std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(255, '\n');
+            std::cout << "Erreur : choisissez une des options proposées \n" << "\n";
+            play_again();
+        }
+    } while (replay != 1 && replay != 2 || std::cin.fail());
+
+    switch(replay)
+    {
+        case 1:
+            boot();
+            break;
+        case 2:
+            break;
+    }
 }

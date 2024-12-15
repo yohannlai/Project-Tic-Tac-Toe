@@ -11,3 +11,5 @@ void two_players();
 void player_vs_AI();
 
 void boot();
+
+void play_again();
