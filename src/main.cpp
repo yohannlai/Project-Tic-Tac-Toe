@@ -1,5 +1,4 @@
-#include "Player.cpp"
-#include "Game.cpp"
+#include "Launcher.cpp"
 
 int main(){
 
