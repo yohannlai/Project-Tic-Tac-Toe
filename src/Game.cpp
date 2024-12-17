@@ -2,6 +2,7 @@
 #include "../include/Game.hpp"
 #include <cstdlib>
 
+// Affiche le plateau de jeu
 void draw_game_board(std::array<char, 9> game_board)
 {
     for(int i {0}; i < 9; i++)
@@ -10,6 +11,7 @@ void draw_game_board(std::array<char, 9> game_board)
         
         std::cout << "| " << game_board[i] << " ";
         
+        // Ajoute un séparateur après chaque troisième case
         if((x-1) == 1)
         {
             std::cout << "|" << '\n';
@@ -17,6 +19,7 @@ void draw_game_board(std::array<char, 9> game_board)
     }
 }
 
+// Vérifie si un joueur a gagné à partir d'un tableau avec les positions gagnantes
 bool check_win(std::array<char, 9> game_board, char symbol)
 {
     std::array<std::array<int, 3>, 8> winning_pos {{
@@ -35,6 +38,7 @@ bool check_win(std::array<char, 9> game_board, char symbol)
     return false;
 }
 
+// Mode 2 joueurs
 void two_players()
 {
     std::cout << "Vous avez choisi le mode \"Deux joueurs\": \n";
@@ -44,6 +48,7 @@ void two_players()
     Player player1 = create_player();
     Player player2 = create_player();
 
+    // Assure que les deux joueurs ont des symboles différents
     while(player2.symbol == player1.symbol)
     {
         std::cout << player2.name << " doit choisir un symbole différent de " << player1.symbol << " qui est déjà pris par " << player1.name << "\n";
@@ -63,6 +68,7 @@ void two_players()
     int turn_count {0};
     Player current_player = player1;
 
+    // Boucle de jeu
     while(!game_over && turn_count < 9)
     {
         draw_game_board(game_board);
@@ -72,6 +78,7 @@ void two_players()
             std::cout << current_player.name << " (" << current_player.symbol << "), choisissez une case (1-9): ";
             std::cin >> move;
 
+            // Vérification de la validité de l'entrée
             if(move < 1 || move > 9 || std::cin.fail())
             {
                 std::cin.clear();
@@ -80,11 +87,13 @@ void two_players()
             }
         } while (move < 1 || move > 9);
 
+        // Si la case est libre, on effectue le coup
         if(game_board[move - 1] != 'X' && game_board[move - 1] != 'O')
         {
             game_board[move - 1] = current_player.symbol;
             turn_count++;
         
+            // Vérification si un joueur a gagné
             if(check_win(game_board, current_player.symbol))
             {
                 draw_game_board(game_board);
@@ -93,6 +102,7 @@ void two_players()
             }
             else
             {
+                // Changement de joueur
                 if(current_player.symbol == player1.symbol)
                 {
                     current_player = player2;
@@ -109,6 +119,7 @@ void two_players()
         }
     }
 
+    // Si aucune victoire, match nul
     if(!game_over)
     {
         draw_game_board(game_board);
@@ -116,6 +127,7 @@ void two_players()
     }
 }
 
+// Mode 1 joueur contre l'IA
 void player_vs_AI()
 {
     std::cout << "Vous avez choisi le mode \"Un joueur contre l'IA\": \n";
@@ -126,6 +138,7 @@ void player_vs_AI()
     Player AI;
     AI.name = "IA";
 
+    // L'IA choisit un symbole opposé à celui du joueur
     if(player.symbol == 'X')
     {
         AI.symbol = 'O';
@@ -139,11 +152,13 @@ void player_vs_AI()
     int turn_count {0};
     Player current_player = player;
 
+    // Boucle de jeu pour le mode 1 joueur contre IA
     while(!game_over && turn_count < 9)
     {
         draw_game_board(game_board);
         int move;
-
+        
+        // L'IA joue de manière aléatoire
         if(current_player.name == "IA")
         {
             do {
@@ -162,6 +177,7 @@ void player_vs_AI()
                 std::cout << current_player.name << " (" << current_player.symbol << "), choisissez une case (1-9): ";
                 std::cin >> move;
 
+                // Vérification de la validité de l'entrée
                 if(move < 1 || move > 9 || std::cin.fail())
                 {
                     std::cin.clear();
@@ -182,6 +198,7 @@ void player_vs_AI()
             turn_count++;
         }
 
+        // Vérification si un joueur a gagné
         if(check_win(game_board, current_player.symbol))
         {
             draw_game_board(game_board);
@@ -190,6 +207,7 @@ void player_vs_AI()
         }
         else
         {
+            // Changement de joueur
             if(current_player.symbol == player.symbol)
             {
                 current_player = AI;
@@ -201,6 +219,7 @@ void player_vs_AI()
         }
     }
 
+    // Si aucune victoire, match nul
     if(!game_over)
     {
         draw_game_board(game_board);
