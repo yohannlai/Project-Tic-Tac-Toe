@@ -1,8 +1,9 @@
 #include "Launcher.cpp"
 
+// Point d'entrée principal du programme
 int main(){
 
-    boot();
+    boot(); // Lance le jeu
 
     return 0;
 }

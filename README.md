@@ -29,7 +29,7 @@ Le jeu s'effectue sur une grille 3x3 où les joueurs doivent aligner trois de le
 
 ## Prérequis
 
-Avant d'exécuter le programme, assurez-vous d'avoir un environnement de développement C++ avec le standard C++17. Le projet utilise CMake pour la configuration du build. Pour information, le programme a été testé sur le système d'exploitation macOS Sonoma 14.6.1 mais il ne devrait pas y avoir de problème sur Windows.
+Avant d'exécuter le programme, assurez-vous d'avoir un environnement de développement C++ avec le standard C++17. Le projet utilise CMake pour la configuration du build. Pour information, le programme a été testé sans problème apparent sur le système d'exploitation macOS Sonoma 14.6.1 mais il ne devrait pas y avoir de problème sur Windows.
 
 ### Librairies et dépendances
 
@@ -60,7 +60,7 @@ J'ajoute que j'ai mis des commentaires dans mon code, ce qui peut donner plus d'
 
 ## Fonctionnalités supplémentaires
 
-Il n'y a pas à proprement parler de fonctionnalités supplémentaires. Étant donné l'existence d'autres projets à faire en parallèle, j'ai préféré me concentrer sur l'essentiel requis pour ce projet. Par ailleurs, j'ai rencontré quelques difficultés qui m'ont ralenti et qui m'ont ainsi conforté dans cette décision (voir [section suivante](#problèmes-rencontrés-et-solutions)). Je ne suis de plus pas familier avec les librairies et les interfaces graphiques, et je n'avais pas le temps de les comprendre.
+Il n'y a pas à proprement parler de fonctionnalités supplémentaires. Étant donné l'existence d'autres projets à faire en parallèle, j'ai préféré me concentrer sur l'essentiel requis pour ce projet. Par ailleurs, j'ai rencontré quelques difficultés qui m'ont ralenti et qui m'ont ainsi conforté dans cette décision (voir [section suivante](#problèmes-rencontrés-et-solutions)). Je ne suis de plus pas familier avec les librairies et les interfaces graphiques, et je n'avais pas le temps de les appréhender. J'ai aussi choisi de ne pas utiliser la librairie `terminal_ctrl` car je trouve plus plaisant de voir tout le déroulé du jeu dans le terminal.
 
 J'ai tout de même ajouté quelque chose qui n'était pas demandé et qui est contenu dans la fonction `play_again()`, qui permet, à la fin d'une partie, de demander au(x) joueur(s) s'il(s) souhaite(nt) continuer à jouer en relançant une nouvelle partie ou bien s'il(s) souhaite(nt) arrêter le jeu. Il s'agit d'une fonction simple reprenant modèle sur `boot()` et qui ne nécessite donc pas plus d'explications.
 
@@ -70,18 +70,18 @@ J'ai tout de même ajouté quelque chose qui n'était pas demandé et qui est co
 Au début du projet, il y avait des problèmes avec la validation des entrées utilisateurs, notamment lorsqu'un joueur entrait une valeur incorrecte pour le choix du symbole ou pour une case sur le plateau. J'ai ajouté une validation robuste avec des boucles `do-while` et des vérifications sur les entrées de l'utilisateur pour m'assurer que les valeurs sont correctes (X, O, ou des numéros entre 1 et 9).
 
 ### Logique de l'IA
-L'IA dans ce projet est simple : elle choisit une case aléatoire parmi celles qui sont encore disponibles. Bien que basique en apparence, cette partie m'a donnée du fil à retordre car je pensais simplement reprendre le code du mode deux joueurs en remplaçant un joueur par l'IA mais je me suis rendu compte que cette approche ne fonctionnerait pas et qu'il fallait revoir la logique de gestion des tours de jeu. 
+L'IA dans ce projet est simple : elle choisit une case aléatoire parmi celles qui sont encore disponibles. Bien que basique en apparence, cette partie m'a donnée du fil à retordre car je pensais simplement reprendre le code du mode deux joueurs en remplaçant juste un joueur par l'IA mais je me suis rendu compte que ça ne suffirait pas et qu'il fallait aussi revoir la logique de gestion des tours de jeu.
 
 ### Clarté du code
-Je me suis aussi rendu compte à ce moment là que mon code aurait mérité plus de clarté, puisqu'en navigant entre les différentes fonctions de `Game.cpp` je me perdais souvent au milieu de toutes ces lignes. Là j'ai compris que l'indentation et les couleurs de l'éditeur de code ne suffisait pas à le rendre clair quand les fonctions sont de plus en plus détaillées. J'ai pensé à éventuellement découper les grosses fonctions avec dedans des sous-fonctions communes mais je n'ai pas exécuté mon idée pour déjà me concentrer sur la réalisation d'un programme fonctionnel.
+Je me suis aussi rendu compte à ce moment là que mon code aurait mérité plus de clarté, puisqu'en navigant entre les différentes fonctions de `Game.cpp`, je me perdais souvent au milieu de toutes ces lignes. Là j'ai compris que l'indentation et les couleurs de l'éditeur de code ne suffisaient pas à le rendre clair quand les fonctions sont de plus en plus développées. Au cours du projet, j'ai pensé à éventuellement découper les grosses fonctions avec dedans des sous-fonctions communes mais je n'ai pas exécuté mon idée pour déjà me concentrer sur la réalisation d'un programme fonctionnel.
 
 ### Placements des #include
-Ici, ce n'est pas un problème en soi mais plutôt un oubli. En organisant les fichiers avec les `.hpp` et les `.cpp`, j'ai au début effectivement oublié d'inclure certains fichiers à d'autres ou parfois je ne mettais pas le bon chemin. Il fallait aussi penser à les inclure au bon endroit et uniquement là où c'est nécessaire. J'ai aussi utilisé des fonctions nécessitant les bibliothèques standard de C++ et j'ai au départ oublié d'en inclure certaines comme `cstdlib`. Au final, vérifiant à chaque fois comment était exécuté le programme, je me suis vite rendu compte de ces oublis.
+Ici, ce n'est pas un problème en soi mais plutôt des oublis. En organisant les fichiers avec les fichiers d'en-tête `.hpp` et les `.cpp`, j'ai au début effectivement oublié d'inclure certains fichiers à d'autres ou parfois je ne mettais pas le bon chemin. Il fallait aussi penser à les inclure au bon endroit et uniquement là où c'est nécessaire. J'ai aussi utilisé des fonctions nécessitant les bibliothèques standard de C++ et j'ai au départ oublié d'en inclure certaines comme `cstdlib`. Au final, vérifiant à chaque fois comment était exécuté le programme, je me suis vite rendu compte de ces oublis.
 
 ## Conclusion
 
 Je trouve que ce projet de jeu de TicTacToe en C++ est une bonne introduction à la gestion de la logique de jeu. Il montre aussi comment organiser le code en différents fichiers.
 
-Je suis satisfait du résultat obtenu, bien que certaines optimisations doivent rester à explorer pour parfaire mes compétences. Je regrette juste de ne pas avoir eu le temps d'ajouter des améliorations au jeu de base et peut-être aussi de ne pas avoir créé plus de sous-fonctions pour la lisibilité.
+Je suis satisfait du résultat obtenu, bien que certaines optimisations doivent rester à explorer pour parfaire mes compétences. Je regrette juste de ne pas avoir eu le temps d'ajouter des améliorations au jeu de base et peut-être aussi de ne pas avoir créé plus de sous-fonctions pour la lisibilité même si le programme est normalement fonctionnel et respecte les consignes.
 
-J'ai identifié les points où je dois progresser, notamment dans l'organisation et la clarté du code et des fichiers, ainsi que dans la compréhension de la logique du jeu.
+J'ai identifié les points où je dois progresser, notamment dans l'organisation et la clarté du code et des fichiers, ainsi que dans la compréhension et la structure de la logique du jeu.

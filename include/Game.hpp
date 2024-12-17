@@ -1,6 +1,6 @@
 #pragma once
 #include<iostream>
-#include<array>
+#include<array> // Pour pouvoir utiliser les tableaux statiques
 
 void draw_game_board(std::array<char, 9> game_board);
 

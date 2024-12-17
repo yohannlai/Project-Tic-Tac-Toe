@@ -1,6 +1,6 @@
 #include "Player.cpp"
 #include "../include/Game.hpp"
-#include <cstdlib>
+#include <cstdlib> // Pour pouvoir utiliser la fonction rand()
 
 // Affiche le plateau de jeu
 void draw_game_board(std::array<char, 9> game_board)
